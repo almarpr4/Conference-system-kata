@@ -16,6 +16,12 @@
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
 
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
 # Gradle
 .idea/**/gradle.xml
 .idea/**/libraries
