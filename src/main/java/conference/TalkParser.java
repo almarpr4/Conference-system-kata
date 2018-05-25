@@ -8,6 +8,7 @@ public class TalkParser {
 
     public Talk parseLine(String line) {
         if (line.isEmpty())throw new NoContentInLineException();
+        if (line.split(" ").length <= 1) throw new MalformedLineException();
         String title = extractTitle(line);
         int duration = extractDuration(line);
 

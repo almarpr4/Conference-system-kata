@@ -1,7 +1,4 @@
-import conference.NoContentInLineException;
-import conference.NoDurationException;
-import conference.Talk;
-import conference.TalkParser;
+import conference.*;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,10 +30,23 @@ public class ParserTest {
     }
 
     @Test
-    public void lineWithMalformedDurationReturnsNoDurationException(){
+    public void lineWithMalformedAbbreviationDurationReturnsNoDurationException(){
         assertThrows(NoDurationException.class,
                 () -> talkParser.parseLine("Writing Fast Tests Against Enterprise Rails min"));
 
+    }
+
+    @Test
+    public void lineWithMalformedMinutesDurationReturnsNoDurationException(){
+        assertThrows(NoDurationException.class,
+                () -> talkParser.parseLine("Writing Fast Tests Against Enterprise Rails 60"));
+
+    }
+
+    @Test
+    public void missingInformationInTheLineeReturnsMalformedLineException(){
+        assertThrows(MalformedLineException.class,
+                () -> talkParser.parseLine("60min"));
 
     }
 
