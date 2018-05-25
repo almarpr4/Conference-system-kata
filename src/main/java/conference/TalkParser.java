@@ -1,5 +1,7 @@
 package conference;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class TalkParser {
 
     public static final String MINUTE_ABBREVIATION = "min";
@@ -29,7 +31,7 @@ public class TalkParser {
 
     private boolean containsMinutes(String durationPart) {
         String[] splitWords = durationPart.split(MINUTE_ABBREVIATION);
-        return splitWords.length == 1;
+        return splitWords.length == 1 && StringUtils.isNumeric(splitWords[0].trim());
     }
 
     private int extractMinutes(String durationPart) {
