@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 public class TalkParser {
 
     public static final String MINUTE_ABBREVIATION = "min";
+    public static final String LIGHTING_TALK = "lightning";
 
     public Talk parseLine(String line) {
         if (line.isEmpty())throw new NoContentInLineException();
@@ -19,14 +20,16 @@ public class TalkParser {
     private int extractDuration(String line) {
         int lastIndex = line.lastIndexOf(" ");
         String durationPart = line.substring(lastIndex);
-        int minutes = extractMinutes(durationPart);
+        int minutes = extractMinutes(durationPart.trim());
 
         return minutes;
 
     }
 
     private boolean isValidDuration(String durationPart) {
-        return durationPart.contains(MINUTE_ABBREVIATION) && containsMinutes(durationPart);
+        boolean isRegularTalk = durationPart.contains(MINUTE_ABBREVIATION) && containsMinutes(durationPart);
+        boolean isLightingTalk = durationPart.equals(LIGHTING_TALK);
+        return isRegularTalk || isLightingTalk;
 
     }
 
@@ -40,6 +43,12 @@ public class TalkParser {
             throw new NoDurationException();
         }
 
+        int minutes = extractRegularTalkMinutes(durationPart);
+        return minutes;
+    }
+
+    private int extractRegularTalkMinutes(String durationPart) {
+        if (durationPart.equals(LIGHTING_TALK)) return 5;
         int minuteIndexInString = durationPart.lastIndexOf(MINUTE_ABBREVIATION);
         String minutesPart = durationPart.substring(0, minuteIndexInString);
         return Integer.parseInt(minutesPart.trim());

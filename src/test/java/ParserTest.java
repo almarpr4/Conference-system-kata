@@ -44,9 +44,18 @@ public class ParserTest {
     }
 
     @Test
-    public void missingInformationInTheLineeReturnsMalformedLineException(){
+    public void lineWithMissingTitleReturnsNoDurationException(){
         assertThrows(MalformedLineException.class,
                 () -> talkParser.parseLine("60min"));
+
+    }
+
+    @Test
+    public void lineWithLightingDurationReturnsLightingTalk(){
+        Talk talk = talkParser.parseLine("Rails for Python Developers lightning");
+
+        assertEquals("Rails for Python Developers", talk.getTitle());
+        assertSame(5, talk.getDuration());
 
     }
 
